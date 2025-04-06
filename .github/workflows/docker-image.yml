@@ -18,3 +18,7 @@ jobs:
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
     - name: docker login 
       run: docker login -u ${{secrets.REGISTRY_USERNAME}} -p ${{secrets.REGISTRY_PASSWORD}}
+    - name: tag image 
+      run: docker tag my-image-name:$(date +%s) ${{secrets.REGISTRY_USERNAME}}/resume
+    - name: push image to dockerhub
+      run: docker push ${{secrets.REGISTRY_USERNAME}}/resume
