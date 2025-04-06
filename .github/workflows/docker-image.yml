@@ -7,18 +7,20 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name
-    - name: docker login 
-      run: docker login -u ${{secrets.REGISTRY_USERNAME}} -p ${{secrets.REGISTRY_PASSWORD}}
-    - name: tag image 
-      run: docker tag my-image-name ${{secrets.REGISTRY_USERNAME}}/resume
-    - name: push image to dockerhub
-      run: docker push ${{secrets.REGISTRY_USERNAME}}/resume
+      run: docker build . --file Dockerfile --tag my-image-name:v${{ github.run_number }}
+
+    - name: Docker login 
+      run: docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
+
+    - name: Tag image with registry path
+      run: docker tag my-image-name:v${{ github.run_number }} ${{ secrets.REGISTRY_USERNAME }}/resume:v${{ github.run_number }}
+
+    - name: Push image to DockerHub
+      run: docker push ${{ secrets.REGISTRY_USERNAME }}/resume:v${{ github.run_number }}
