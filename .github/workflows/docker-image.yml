@@ -15,10 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag my-image-name
     - name: docker login 
       run: docker login -u ${{secrets.REGISTRY_USERNAME}} -p ${{secrets.REGISTRY_PASSWORD}}
     - name: tag image 
-      run: docker tag my-image-name:$(date +%s) ${{secrets.REGISTRY_USERNAME}}/resume
+      run: docker tag my-image-name ${{secrets.REGISTRY_USERNAME}}/resume
     - name: push image to dockerhub
       run: docker push ${{secrets.REGISTRY_USERNAME}}/resume
