@@ -1,0 +1,30 @@
+#name of the workflow
+
+name: my first action
+
+#workflow trigger
+
+on: 
+    push:
+        branches: [ "main"]
+    pull_request: 
+        branches: [ "main"]
+    workflow_dispatch: 
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout the code
+              run: echo checkout
+            - name: test
+              run: echo test
+    scan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: scan  the code
+              run: echo scan
+            - name: scan
+              run: echo scan    
+
+
