@@ -28,7 +28,7 @@ jobs:
             - name: scan
               run: echo scan    
     unittest:
-        needs: build
+        needs: scan
         runs-on: ubuntu-latest
         steps:
                     - name: unittest  the code
