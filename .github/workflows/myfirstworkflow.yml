@@ -20,6 +20,7 @@ jobs:
             - name: test
               run: echo test
     scan:
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: scan  the code
