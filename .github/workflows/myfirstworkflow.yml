@@ -27,5 +27,12 @@ jobs:
               run: echo scan
             - name: scan
               run: echo scan    
-
+    unittest:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+                    - name: unittest  the code
+                      run: pwd 
+                    - name: unittest
+                      run: ls  
 
