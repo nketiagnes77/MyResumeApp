@@ -21,21 +21,14 @@ jobs:
         steps:
             - name: checkout the code
               uses: actions/checkout@v4
-            - name: Azure Login
-              uses: azure/login@v2
-              with:
-                auth-type: IDENTITY
-                subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-                client-id: ${{ secrets.AZURE_CLIENT_ID }}
-                tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-                enable-AzPSSession: true
+            
             - name: Login to Azure Container Registry
               run: |
-                docker login -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} ${{ secrets.REGISTRY_LOGIN_SERVER }}
+                docker login -u ${{ secrets.acr_user }} -p ${{ secrets.acr_pass }} ${{ secrets.acr_host }}
             - name: Build and Push Image
               run: |
-                docker build -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/my-image:latest .
-                docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/my-image:latest
+                docker build -t ${{ secrets.acr_host}}/my-image:latest .
+                docker push ${{ secrets.acr_host }}/my-image:latest
     scan:
         needs: build
         runs-on: ubuntu-latest
